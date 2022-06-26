@@ -1,0 +1,22 @@
+{
+    "mappings": [
+        {
+            "request": {
+                "method": "GET",
+                "url": "/status"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "bodyFileName": "status.json",
+                "delayDistribution": {
+                    "type": "uniform",
+                    "lower": 50,
+                    "upper": 200
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "mappings": [
+        {
+            "request": {
+                "method": "GET",
+                "url": "/health-check/liveness"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "bodyFileName": "health-check-liveness.json",
+                "delayDistribution": {
+                    "type": "uniform",
+                    "lower": 50,
+                    "upper": 200
+                }
+            }
+        }
+    ]
+}

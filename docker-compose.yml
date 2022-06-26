@@ -1,0 +1,72 @@
+version: "3.8"
+services:
+  laravel:
+    image: lara:dev
+    build:
+      context: .
+      target: dev
+    working_dir: /app
+    user: "1000:1000"
+    environment:
+      - LOG_CHANNEL=stdout
+      - CACHE_DRIVER=redis
+      - QUEUE_CONNECTION=redis
+      - SESSION_DRIVER=redis
+      - REDIS_HOST=redis
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=laravel
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+    volumes:
+      - .:/app
+      - ./.docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
+      - ./.docker/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    depends_on:
+      - nginx
+      - api1
+      - api2
+      - redis
+      - postgres
+
+  nginx:
+    image: nginx:alpine
+    working_dir: /application
+    environment:
+      - DYNAMIC_FPM_HOST=laravel
+    volumes:
+      - .:/app
+      - ./.docker/nginx/nginx.conf:/etc/nginx/templates/default.conf.template
+    ports:
+      - 8000:80
+  api1:
+    image: wiremock/wiremock:2.33.2
+    volumes:
+      - ./.wiremock/api1/endpoints:/home/wiremock/mappings
+      - ./.wiremock/api1/responses:/home/wiremock/__files
+    ports:
+      - 8001:8080
+  api2:
+    image: wiremock/wiremock:2.33.2
+    volumes:
+      - ./.wiremock/api2/endpoints:/home/wiremock/mappings
+      - ./.wiremock/api2/responses:/home/wiremock/__files
+    ports:
+      - 8002:8080
+  redis:
+    image: redis:alpine
+
+  postgres:
+    image: postgres:12.11
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=laravel
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  postgresdata: {}
