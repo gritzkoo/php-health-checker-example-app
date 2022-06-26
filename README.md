@@ -1,5 +1,7 @@
 # PHP Health Checker example test project
 
+This project was created to show how to use composer package `gritzkoo/php-health-checker` for <https://github.com/gritzkoo/php-health-checker>
+
 ## Instructions
 
 1. Clone this repository
@@ -21,7 +23,7 @@ make test # runs laravel test, generate coverages, and open browse to see how to
 
 [app/Services/HealthCheckerService.php](app/Services/HealthCheckerService.php "example service")
 
-## Example writing api integrations with test
+## Example writing API integrations with test
 
 [app/Api/FakeApi1/FakeApi1.php](app/Api/FakeApi1/FakeApi1.php "example api 1")
 

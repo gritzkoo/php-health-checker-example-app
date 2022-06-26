@@ -1,7 +1,6 @@
 start:
 	cp .env.example .env
-	docker-compose build laravel
-	docker-compose run --rm laravel sh -c 'composer install; php artisan key:generate'
+	docker-compose run --rm laravel sh -c 'composer install; php artisan key:generate; php artisan migrate'
 
 up:
 	docker-compose up -d laravel
