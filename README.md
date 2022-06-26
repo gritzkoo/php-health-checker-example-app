@@ -5,7 +5,7 @@
 1. Clone this repository
 
     ```sh
-    git clone https://github.com/gritzkoo/php-health-checker-tester
+    git clone https://github.com/gritzkoo/php-health-checker-example-app
     ```
 
 2. Available commands
